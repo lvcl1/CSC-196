@@ -1,15 +1,45 @@
 #include <iostream>
-#include "Core/random.h"
-#include "Core/FileIO.h"
-#include "Core/Memory.h"
-#include "Core/Time.h"
+#include "Core/Core.h"
 #include "Renderer/Renderer.h"
 #include <chrono>
+#include <vector>
 using namespace std;
+
+class Star
+{
+public:
+	Star(const kiko::Vector2& pos, const kiko::Vector2& vel):m_pos{ pos },m_vel{vel}{}
+	void Update() {
+		m_pos += m_vel;
+	}
+
+public:
+	kiko::Vector2 m_pos;
+	kiko::Vector2 m_vel;
+};
 
 int main()
 {
-	kiko::g_memoryTracker.displayInfo();
+	kiko::seedRandom((unsigned int)time(nullptr));
+	vector<kiko::Vector2> points;
+	kiko::Renderer renderer;
+	renderer.Initialize();
+	renderer.CreateWindow("CSC190", 800, 800);
+	for (int i = 0; i < 1000; i++)
+	{
+		points.push_back(kiko::Vector2(kiko::random(renderer.GetWidth()), kiko::random(renderer.Getheight())));
+	}
+	while (true)
+	{
+		renderer.BeginFrame();
+		for (auto point:points)
+		{
+			renderer.SetColor(kiko::random(256), kiko::random(256), kiko::random(256), 255);
+			renderer.DrawPoint(point.X, point.Y);
+		}
+		//renderer.EndFrame();
+	}
+	/*kiko::g_memoryTracker.displayInfo();
 	int* p = new int;
 	kiko::g_memoryTracker.displayInfo();
 	delete p;
@@ -19,7 +49,7 @@ int main()
 	{
 	}
 	cout << timer.GetElapsedSeconds() << endl;
-	/*kiko::seedRandom((unsigned int)time(nullptr));
+	kiko::seedRandom((unsigned int)time(nullptr));
 	for (int i = 0; i < 10; i++)
 	{
 		cout << kiko::random(30, 20) << endl;
@@ -33,4 +63,5 @@ int main()
 	string buffer;
 	kiko::ReadFile("game.txt", buffer);
 	cout << buffer << endl;*/
+	return 0;
 }
