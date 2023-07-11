@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Core/Core.h"
 #include "Renderer/Renderer.h"
+#include "Renderer/Model.h"
 #include <chrono>
 #include <vector>
 using namespace std;
@@ -21,14 +22,17 @@ public:
 int main()
 {
 	kiko::seedRandom((unsigned int)time(nullptr));
-	vector<kiko::Vector2> points;
 	kiko::Renderer renderer;
 	renderer.Initialize();
 	renderer.CreateWindow("CSC190", 800, 800);
-	for (int i = 0; i < 1000; i++)
+	std::vector < kiko::vec2> points{{-10, 5}, { 10,5 }, { 0,-5 }};
+	kiko::Model model{points};
+	kiko::vec2 v{9, 9};
+
+	/*for (int i = 0; i < 1000; i++)
 	{
 		points.push_back(kiko::Vector2(kiko::random(renderer.GetWidth()), kiko::random(renderer.Getheight())));
-	}
+	}*/
 	while (true)
 	{
 		renderer.BeginFrame();
@@ -37,6 +41,7 @@ int main()
 			renderer.SetColor(kiko::random(256), kiko::random(256), kiko::random(256), 255);
 			renderer.DrawPoint(point.X, point.Y);
 		}
+		//model.Draw(renderer,0,2);
 		//renderer.EndFrame();
 	}
 	/*kiko::g_memoryTracker.displayInfo();

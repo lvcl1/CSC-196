@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 namespace kiko {
 	class Vector2
 	{
@@ -24,6 +25,11 @@ namespace kiko {
 		Vector2& operator -= (const Vector2& v) { X -= v.X; Y -= v.Y; return *this; }
 		Vector2& operator *= (const Vector2& v) { X *= v.X; Y *= v.Y; return *this; }
 		Vector2& operator /= (const Vector2& v) { X /= v.X; Y /= v.Y; return *this; }
+
+		float langthsqr() { return (X * X) + (Y * Y); }
+		float langth() { return sqrt(langthsqr()); }
+		Vector2 Normalized() { return *this/langth(); }
+		void Normalize() { *this /= langth(); }
 	private:
 
 	};
