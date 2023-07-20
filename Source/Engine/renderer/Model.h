@@ -11,8 +11,10 @@ namespace kiko {
 		void Draw(Renderer& renderer, const vec2& position, float rotation, float scale);
 		void Draw(Renderer& renderer, const Transform& transform);
 		bool Load(const std::string& filename);
+		float GetRad();
 	private:
 		std::vector<vec2> m_points;
-
+		Color m_color;
+		float m_rad = 0;
 	};
 }

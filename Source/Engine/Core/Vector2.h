@@ -29,8 +29,8 @@ namespace kiko {
 
 		float langthSqr() const { return (X * X) + (Y * Y); }
 		float langth() const { return sqrt(langthSqr()); }
-		float distanceSqr(const vec2& v) const { return(v - *this).langthSqr(); }
-		float distance(const vec2& v) const { return(v - *this).langth(); }
+		float distanceSqr(const Vector2& v) const { return(v - *this).langthSqr(); }
+		float distance(const Vector2& v) const { return(v - *this).langth(); }
 		Vector2 Normalized() const { return *this/langth(); }
 		void Normalize() { *this /= langth(); }
 		float angle() const { return std::atan2f(Y, X); }

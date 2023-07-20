@@ -171,23 +171,29 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Engine\Audio\Audio.vcxproj">
+      <Project>{0f722b34-173f-4bc4-b7ca-8be92ca669d7}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Engine\Core\Core.vcxproj">
       <Project>{0751861a-ece3-445b-a68b-9f1b16e1c2ee}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Framework\Framework.vcxproj">
+      <Project>{2050c645-d111-40e5-a765-bb22fb58b278}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\renderer\renderer.vcxproj">
       <Project>{82059872-f00c-4095-8073-68a058a2f7f8}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Actor.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

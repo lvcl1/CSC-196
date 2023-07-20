@@ -1,9 +1,11 @@
 #include <iostream>
 #include "Core/Core.h"
 #include "Renderer/Renderer.h"
-#include "Renderer/Model.h"
+#include "Renderer/ModelManager.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Audio/AudioSystem.h"
+#include "Framework/Scene.h"
 #include <chrono>
 #include <vector>
 #include <thread>
@@ -26,26 +28,29 @@ public:
 
 int main()
 {
+	kiko::MemoryTracker::Initialize();
+	std::unique_ptr<int> up = std::make_unique<int>(10);
+	//kiko::AudioSystem.AddAudio("Explosion", "Explosion.wav");
+
 	kiko::seedRandom((unsigned int)time(nullptr));
+	kiko::setFilePath("assets");
 	kiko::g_renderer.Initialize();
 	kiko::g_renderer.CreateWindow("CSC190", 800, 800);
 	std::vector < kiko::vec2> points{{-10, 5}, { 10,5 }, { 0,-5 }};
-	kiko::Model model{points};
 	kiko::vec2 v{9, 9};
 	kiko::vec2 position{400, 300};
 	kiko::Transform transform{ position, 0, 3 };
 	float speed = 20;
-	float turnrate = kiko::DegToRad(180);
-	/*for (int i = 0; i < 1000; i++)
-	{
-		points.push_back(kiko::Vector2(kiko::random(renderer.GetWidth()), kiko::random(renderer.Getheight())));
-	}*/
-	Player player{ 200,kiko::pi, {{400,300},0,6},model };
-	std::vector<Enemy> enemies;
+	constexpr float turnrate = kiko::DegToRad(180);
+	kiko::Scene scene;
+	unique_ptr<Player> player = make_unique<Player>(200, kiko::pi, kiko::Transform{ {400, 300}, 0, 6 }, kiko::g_manager.Get("ship.txt"));
+	player->m_tag = "Player";
+	scene.Add(move(player));
 	for (int i = 0; i < 1000; i++)
 	{
-		Enemy enemy{ 300,kiko::pi, {{400,300},kiko::randomf(kiko::Twopi),4},model };
-		enemies.push_back(enemy);
+		unique_ptr<Enemy> enemy = make_unique<Enemy>(kiko::randomf(15.0f), kiko::pi, kiko::Transform{ {400, 300}, kiko::randomf(kiko::Twopi), 4 }, kiko::g_manager.Get("ship.txt"));
+		enemy->m_tag = "Enemy";
+		scene.Add(move(enemy));
 	}
 	while (true)
 	{
@@ -57,14 +62,14 @@ int main()
 			kiko::g_renderer.DrawPoint(point.X, point.Y);
 		}
 		kiko::vec2 direction;
-		player.Update(kiko::g_Time.GetDeltaTime());
-		for (auto& enemy : enemies) enemy.Update(kiko::g_Time.GetDeltaTime());
+		scene.Update(kiko::g_Time.GetDeltaTime());
 		//if (inputSystem.getkeydown(W)) direction.Y=-1;
 		//if (inputSystem.getkeydown(S)) direction.Y=1;
 		//if (inputSystem.getkeydown(A)) direction.X=-1;
 		//if (inputSystem.getkeydown(D)) direction.X=1;
 		position += direction + speed * kiko::g_Time.GetDeltaTime();
 		//model.Draw(renderer, transform.position, transform.rotation, transform.scale);
+		scene.Draw(kiko::g_renderer);
 		kiko::g_renderer.EndFrame();
 		//this_thread::sleep_for(chrono::milliseconds(100));
 	}
