@@ -2,6 +2,7 @@
 #include "Core/Core.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/ModelManager.h"
+#include "Renderer/Font.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Audio/AudioSystem.h"
@@ -9,6 +10,7 @@
 #include <chrono>
 #include <vector>
 #include <thread>
+#include "SpaceGame.h"
 using namespace std;
 
 class Star
@@ -29,7 +31,6 @@ public:
 int main()
 {
 	kiko::MemoryTracker::Initialize();
-	std::unique_ptr<int> up = std::make_unique<int>(10);
 	//kiko::AudioSystem.AddAudio("Explosion", "Explosion.wav");
 
 	kiko::seedRandom((unsigned int)time(nullptr));
@@ -42,16 +43,8 @@ int main()
 	kiko::Transform transform{ position, 0, 3 };
 	float speed = 20;
 	constexpr float turnrate = kiko::DegToRad(180);
-	kiko::Scene scene;
-	unique_ptr<Player> player = make_unique<Player>(200, kiko::pi, kiko::Transform{ {400, 300}, 0, 6 }, kiko::g_manager.Get("ship.txt"));
-	player->m_tag = "Player";
-	scene.Add(move(player));
-	for (int i = 0; i < 1000; i++)
-	{
-		unique_ptr<Enemy> enemy = make_unique<Enemy>(kiko::randomf(15.0f), kiko::pi, kiko::Transform{ {400, 300}, kiko::randomf(kiko::Twopi), 4 }, kiko::g_manager.Get("ship.txt"));
-		enemy->m_tag = "Enemy";
-		scene.Add(move(enemy));
-	}
+	unique_ptr<SpaceGame> game = make_unique<SpaceGame>();
+	game->Init();
 	while (true)
 	{
 		kiko::g_Time.Tick();
@@ -62,40 +55,11 @@ int main()
 			kiko::g_renderer.DrawPoint(point.X, point.Y);
 		}
 		kiko::vec2 direction;
-		scene.Update(kiko::g_Time.GetDeltaTime());
-		//if (inputSystem.getkeydown(W)) direction.Y=-1;
-		//if (inputSystem.getkeydown(S)) direction.Y=1;
-		//if (inputSystem.getkeydown(A)) direction.X=-1;
-		//if (inputSystem.getkeydown(D)) direction.X=1;
+		game->Update(kiko::g_Time.GetDeltaTime());
 		position += direction + speed * kiko::g_Time.GetDeltaTime();
 		//model.Draw(renderer, transform.position, transform.rotation, transform.scale);
-		scene.Draw(kiko::g_renderer);
+		game->Draw(kiko::g_renderer);
 		kiko::g_renderer.EndFrame();
-		//this_thread::sleep_for(chrono::milliseconds(100));
 	}
-	/*kiko::g_memoryTracker.displayInfo();
-	int* p = new int;
-	kiko::g_memoryTracker.displayInfo();
-	delete p;
-	kiko::g_memoryTracker.displayInfo();
-	kiko::Time timer;
-	for (int i = 0; i < 1000000; i++)
-	{
-	}
-	cout << timer.GetElapsedSeconds() << endl;
-	kiko::seedRandom((unsigned int)time(nullptr));
-	for (int i = 0; i < 10; i++)
-	{
-		cout << kiko::random(30, 20) << endl;
-	}
-	cout << kiko::getFilePath() << endl;
-	kiko::setFilePath("Assets");
-	cout << kiko::getFilePath() << endl;
-	size_t size;
-	kiko::getFileSize("game.txt", size);
-	cout << size << endl;
-	string buffer;
-	kiko::ReadFile("game.txt", buffer);
-	cout << buffer << endl;*/
 	return 0;
 }

@@ -3,7 +3,6 @@
 namespace kiko {
 	void Scene::Update(float dt)
 	{
-		//for (auto& actor : m_actors) actor->Update(dt);
 		auto iter = m_actors.begin();
 		while (iter != m_actors.end())
 		{

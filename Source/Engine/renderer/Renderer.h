@@ -9,7 +9,7 @@ namespace kiko
 		Renderer() = default;
 		~Renderer() = default;
 		bool Initialize();
-		bool Shutdown();
+		void Shutdown();
 		void CreateWindow(const std::string& title, int width, int height);
 		void BeginFrame();
 		void EndFrame();

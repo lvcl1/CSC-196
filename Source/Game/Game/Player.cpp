@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Weapon.h"
+#include "SpaceGame.h"
 //#include "Input/InputSystem.h"
 
 void Player::Update(float dt)
@@ -12,7 +13,8 @@ void Player::Update(float dt)
 	float thrust = 0;
 	//if (inputSystem.getkeydown(W)) thrust = 1;
 	kiko::vec2 forward = kiko::vec2{ 0,-1 }.Rotate(m_transform.rotation);
-	m_transform.position += forward * m_speed * thrust + kiko::g_Time.GetDeltaTime();
+	AddForce(forward * m_speed * thrust);
+	//m_transform.position += forward * m_speed * thrust + kiko::g_Time.GetDeltaTime();
 	m_transform.position.X = kiko::Wrap(m_transform.position.X, (float)kiko::g_renderer.GetWidth());
 	m_transform.position.Y = kiko::Wrap(m_transform.position.Y, (float)kiko::g_renderer.Getheight());
 	if (true)
@@ -22,6 +24,9 @@ void Player::Update(float dt)
 		weapon->m_tag = "Player";
 		//m_scene->Add(std::move(weapon))
 	}
+	
+	/*if(t_key)kiko::g_Time.SetTimeScale(.5f);
+	else kiko::g_Time.SetTimeScale(1.0f);*/
 }
 
 void Player::OnCollision(Actor* actor)
@@ -31,11 +36,9 @@ void Player::OnCollision(Actor* actor)
 		m_health -= kiko::random(1, 10);
 		if (m_health != 0)
 		{
+			m_game->SetLives(m_game->GetLives() - 1);
 			m_destroyed = true;
-		}
-		else if(m_health<=50)
-		{
-			m_health++;
+			dynamic_cast<SpaceGame*>(m_game)->SetState(SpaceGame::eState::PlayerDeadStart);
 		}
 	}
 }

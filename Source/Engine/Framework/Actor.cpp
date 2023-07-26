@@ -10,6 +10,8 @@ namespace kiko {
 				m_destroyed = true;
 			}
 		}
+		m_transform.position += m_vel * dt;
+		m_vel *= std::pow(1.0f - m_damping, dt);
 	}
 	void Actor::Draw(Renderer& rederer)
 	{

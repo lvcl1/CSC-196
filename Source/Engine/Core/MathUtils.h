@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <utility>
 namespace kiko {
 	constexpr float pi = 3.141592653589793238462643;
 	constexpr float Twopi = pi * 2;
@@ -17,4 +18,6 @@ namespace kiko {
 		if (min > max) std::swap(min, max);
 		return (val < min) ? min : (val > max) ? max : val;
 	}
+	template<typename T>
+	constexpr T Lerp(const T& a, const T& b, float t) { return (a * (1.0f - t)) + (b * t); }
 }

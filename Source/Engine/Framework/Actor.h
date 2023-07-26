@@ -11,18 +11,26 @@ namespace kiko {
 			m_transform{ transform },
 			m_model{ model }
 		{}
+		Actor(const kiko::Transform& transform) :
+			m_transform{ transform }
+		{}
 		virtual void Update(float dt);
 		virtual void Draw(kiko::Renderer& rederer);
-		float GetRad() { return m_model->GetRad() * m_transform.scale; }
+		float GetRad() { return (m_model) ? m_model->GetRad() * m_transform.scale : 0; }
 		virtual void OnCollision(Actor* other) {};
+		void AddForce(const vec2& force) { m_vel += force; }
+		void SetDamping(float damping) { m_damping = damping; }
 		class Scene* m_scene = nullptr;
 		friend class Scene;
+		class Game* m_game = nullptr;
 
-		kiko::Transform m_transform;
+		Transform m_transform;
 		std::string m_tag;
 	protected:
 		bool m_destroyed = false;
 		float m_lifespan = -1.0f;
 		std::shared_ptr<Model> m_model;
+		vec2 m_vel;
+		float m_damping = 0;
 	};
 }
