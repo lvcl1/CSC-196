@@ -9,12 +9,17 @@ void Enemy::Update(float dt)
 {
 	Actor::Update(dt);
 	Player* player = m_scene->GetActor<Player>();
+	kiko::vec2 forward = kiko::vec2{ 0,-1 }.Rotate(m_transform.rotation);
 	if (player)
 	{
 		kiko::Vector2 direction = player->m_transform.position - m_transform.position;
-		m_transform.rotation = direction.angle() + kiko::halfpi;
+		float turnAngle = kiko::vec2::SignedAngle(forward, direction.Normalized());
+		m_transform.rotation += turnAngle * 1 * dt;
+		if (std::fabs(turnAngle)<kiko::DegToRad(30.0f))
+		{
+			//see u
+		}
 	}
-	kiko::vec2 forward = kiko::vec2{ 0,-1 }.Rotate(m_transform.rotation);
 	m_transform.position += forward * m_speed * kiko::g_Time.GetDeltaTime();
 	m_transform.position.X = kiko::Wrap(m_transform.position.X, (float)kiko::g_renderer.GetWidth());
 	m_transform.position.Y = kiko::Wrap(m_transform.position.Y, (float)kiko::g_renderer.Getheight());
