@@ -16,7 +16,7 @@ namespace kiko {
 		{}
 		virtual void Update(float dt);
 		virtual void Draw(kiko::Renderer& rederer);
-		float GetRad() { return (m_model) ? m_model->GetRad() * m_transform.scale : 0; }
+		float GetRad() { return (m_model) ? m_model->GetRad() * m_transform.scale : -10000; }
 		virtual void OnCollision(Actor* other) {};
 		void AddForce(const vec2& force) { m_vel += force; }
 		void SetDamping(float damping) { m_damping = damping; }

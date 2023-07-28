@@ -107,8 +107,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(BinDir)$(PlatformTarget)$(ProjectName)*.exe" "$(SolutionDir)Build" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -128,8 +127,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(BinDir)$(PlatformTarget)$(ProjectName)*.exe" "$(SolutionDir)Build" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -145,8 +143,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(BinDir)$(PlatformTarget)$(ProjectName)*.exe" "$(SolutionDir)Build" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -166,8 +163,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(BinDir)$(PlatformTarget)$(ProjectName)*.exe" "$(SolutionDir)Build" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -186,6 +182,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\Framework\Framework.vcxproj">
       <Project>{2050c645-d111-40e5-a765-bb22fb58b278}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Input\Input.vcxproj">
+      <Project>{352cb89b-4f6d-4bfb-86eb-caedcd47db17}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\renderer\renderer.vcxproj">
       <Project>{82059872-f00c-4095-8073-68a058a2f7f8}</Project>

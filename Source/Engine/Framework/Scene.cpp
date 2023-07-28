@@ -7,7 +7,7 @@ namespace kiko {
 		while (iter != m_actors.end())
 		{
 			(*iter)->Update(dt);
-			((*iter)->m_destroyed) ? m_actors.erase(iter) : iter++;
+			((*iter)->m_destroyed) ? iter = m_actors.erase(iter) : iter++;
 		}
 		for (auto iter1 = m_actors.begin(); iter1 != m_actors.end(); iter1++) {
 			for (auto iter2 = std::next(iter1, 1); iter2 != m_actors.end(); iter2++) {

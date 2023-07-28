@@ -4,13 +4,15 @@
 #include "Audio/AudioSystem.h"
 #include "Framework/Scene.h"
 #include "renderer/Renderer.h"
-#include "renderer/Font.h"
 #include "Renderer/ModelManager.h"
+#include "Input/InputSystem.h"
 
 
 bool SpaceGame::Init()
 {
-	//m_font = std::make_shared<kiko::Font>("", 100);
+	m_font = std::make_shared<kiko::Font>("Odinson.ttf", 100);
+	m_scoretext = std::make_unique<kiko::Text>(m_font);
+	m_scoretext->Create(kiko::g_renderer, "text", kiko::Color{0, 0, 1, 1});
 
 	m_scene = std::make_unique<kiko::Scene>();
 	return true;
@@ -25,11 +27,10 @@ void SpaceGame::Update(float dt)
 	switch (m_state)
 	{
 	case SpaceGame::eState::Title:
-		/*if (kiko::input.keydown(space))
+		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE))
 		{
-
-		}*/
-		m_state = eState::StartGame;
+			m_state = eState::StartGame;
+		}
 		break;
 	case SpaceGame::eState::StartGame:
 		m_score = 0;
@@ -52,7 +53,7 @@ void SpaceGame::Update(float dt)
 		if (m_spawnTimer>=m_spawnTime)
 		{
 			m_spawnTimer = 0;
-			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(kiko::randomf(), kiko::randomf(), kiko::Transform{ {400, 300}, 0, 6 }, kiko::g_manager.Get("ship.txt"));
+   			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(kiko::randomf(), kiko::randomf(), kiko::Transform{ {400, 300}, 0, 6 }, kiko::g_manager.Get("ship.txt"));
 			enemy->m_tag = "Enemy";
 			enemy->m_game = this;
 			m_scene->Add(std::move(enemy));
@@ -60,9 +61,9 @@ void SpaceGame::Update(float dt)
 		break;
 	case eState::PlayerDeadStart:
 		m_stateTimer = 3;
-		m_state = eState::PlayerDead;
 		if (m_lives == 0) m_state = eState::Gameover;
-		else  m_state = eState::PlayerDead;
+		else  
+		m_state = eState::PlayerDead;
 		break;
 	case SpaceGame::eState::PlayerDead:
 		m_stateTimer -= dt;

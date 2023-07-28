@@ -31,7 +31,7 @@ namespace kiko
 	{
 		if (!FileExists(path)) return false;
 		size_t size;
-		if (getFileSize(path, size)) return false;
+		if (!getFileSize(path, size)) return false;
 		buffer.resize(size);
 		std::ifstream stream(path);
 		stream.read(buffer.data(), size);

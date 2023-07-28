@@ -34,7 +34,7 @@ void Enemy::Update(float dt)
 
 void Enemy::OnCollision(Actor* actor)
 {
-	//Player* p = dynamic_cast<Player>(actor);
+	Player* p = dynamic_cast<Player*>(actor);
 	if (actor->m_tag != m_tag)
 	{
 		m_game->AddPoints(100);

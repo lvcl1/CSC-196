@@ -1,6 +1,7 @@
 #include "AudioSystem.h"
 namespace kiko
 {
+	AudioSystem audiosystem;
 	bool AudioSystem::Initialize()
 	{
 		FMOD::System_Create(&m_fmodSystem);

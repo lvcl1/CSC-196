@@ -1,6 +1,6 @@
 #pragma once
 #include "Framework/Game.h"
-#include "renderer/Font.h"
+#include "renderer/Text.h"
 //#include "renderer/text.h"
 class SpaceGame : public kiko::Game
 {
@@ -32,7 +32,7 @@ private:
 	float m_spawnTime = 3;
 	float m_stateTimer = 0;
 	std::shared_ptr<kiko::Font> m_font;
-	//std::shared_ptr<kiko::Text> m_scoretext;
+	std::shared_ptr<kiko::Text> m_scoretext;
 	//std::shared_ptr<kiko::Text> m_titletext;
 	//std::shared_ptr<kiko::Text> m_gameovertext;
 };

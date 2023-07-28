@@ -2,6 +2,8 @@
 namespace kiko {
 	bool Model::Load(const std::string& filename) {
 		std::string buffer;
+
+		ReadFile(filename, buffer);
 		std::istringstream stream(buffer);
 		stream >> m_color;
 		std::string line;
@@ -10,6 +12,8 @@ namespace kiko {
 		for (int i = 0; i < numpoints; i++)
 		{
 			vec2 point;
+			stream >> point;
+			m_points.push_back(point);
 		}
 		return true;
 	}

@@ -26,7 +26,7 @@ namespace kiko
 		float GetDeltaTime()const { return m_deltaTime * m_timeScale; }
 		float GetUnScaledDeltaTime()const { return m_deltaTime; }
 		float GetTimeScale()const { return m_timeScale; }
-		float SetTimeScale(float timeScale) { m_timeScale += timeScale; }
+		void SetTimeScale(float timeScale) { m_timeScale += timeScale; }
 
 
 	private:

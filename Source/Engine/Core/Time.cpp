@@ -3,7 +3,7 @@
 
 namespace kiko
 {
-	Time g_time;
+	Time g_Time;
 	void Time::Tick()
 	{
 		clock_duration duration = clock::now() - m_startTime;

@@ -16,7 +16,7 @@ namespace kiko {
 
 	};
 
-	std::istream& operator >>(std::istream& stream, Color& color) {
+	inline std::istream& operator >>(std::istream& stream, Color& color) {
 		std::string line;
 		std::getline(stream, line);
 		std::string str = line.substr(line.find('{') + 1, line.find(',') - line.find('{'));

@@ -66,7 +66,7 @@ namespace kiko {
 	{
 		return v1.X * v2.X + v1.Y * v2.Y;
 	}
-	std::istream& operator >>(std::istream& strem, Vector2& v) {
+	inline std::istream& operator >>(std::istream& strem, Vector2& v) {
 		std::string line;
 		std::getline(strem, line);
 		// { ##, ## }

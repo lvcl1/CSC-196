@@ -20,6 +20,7 @@ namespace kiko
 		void DrawPoint(float x, float y);
 		int GetWidth() { return m_width; }
 		int Getheight() { return m_height; }
+		friend class Text;
 	private:
 		int m_width = 0;
 		int m_height = 0;

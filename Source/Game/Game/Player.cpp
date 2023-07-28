@@ -1,20 +1,22 @@
 #include "Player.h"
 #include "Weapon.h"
 #include "SpaceGame.h"
-//#include "Input/InputSystem.h"
+#include "Input/InputSystem.h"
 
 void Player::Update(float dt)
 {
+	/*kiko::InputSystem inputSystem;
+	inputSystem.Initialize();*/
 	Actor::Update(dt);
 	float m_rotate = 0;
-	//if (inputSystem.getkeydown(A)) rotate=-1;
-	//if (inputSystem.getkeydown(D)) rotate=1;
+	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_A)) m_rotate=-1;
+	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_D)) m_rotate=1;
 	m_transform.rotation += m_rotate * m_turnrate * kiko::g_Time.GetDeltaTime();
 	float thrust = 0;
-	//if (inputSystem.getkeydown(W)) thrust = 1;
+	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_W)) thrust = 1;
 	kiko::vec2 forward = kiko::vec2{ 0,-1 }.Rotate(m_transform.rotation);
 	AddForce(forward * m_speed * thrust);
-	//m_transform.position += forward * m_speed * thrust + kiko::g_Time.GetDeltaTime();
+	m_transform.position += forward * m_speed * thrust + kiko::g_Time.GetDeltaTime();
 	m_transform.position.X = kiko::Wrap(m_transform.position.X, (float)kiko::g_renderer.GetWidth());
 	m_transform.position.Y = kiko::Wrap(m_transform.position.Y, (float)kiko::g_renderer.Getheight());
 	if (true)
@@ -25,8 +27,8 @@ void Player::Update(float dt)
 		//m_scene->Add(std::move(weapon))
 	}
 	
-	/*if(t_key)kiko::g_Time.SetTimeScale(.5f);
-	else kiko::g_Time.SetTimeScale(1.0f);*/
+	if(kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_T))kiko::g_Time.SetTimeScale(.5f);
+	else kiko::g_Time.SetTimeScale(1.0f);
 }
 
 void Player::OnCollision(Actor* actor)
